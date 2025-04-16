@@ -33,13 +33,21 @@ function TaskDetails() {
 
     const handleDelete = () => {
         fetch(`${BASE_URL}/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
         })
-            .then(() => {
-                navigate("/");
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to delete task");
+                }
+                setSuccessMessage("Task deleted successfully!");
+                setTimeout(() => {
+                    setSuccessMessage("");
+                    navigate('/');  // Redirecting to the main task list page after a task is deleted
+                }, 2000);
             })
             .catch(err => {
                 console.error("Failed to delete task", err);
+                setError("Failed to delete task. Please try again.");
             });
     };
 
