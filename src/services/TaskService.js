@@ -12,3 +12,11 @@ export async function createTask(task) {
     });
     return response.json();
 }
+export async function updateTaskStatus(id, status) {
+    const response = await fetch(`${BASE_URL}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(status)
+    });
+    return response.json();
+}
