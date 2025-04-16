@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getAllTasks } from '../services/taskService';
+import { getAllTasks } from '../services/TaskService';
+import { Link } from 'react-router-dom';
 
 function TaskList() {
     const [tasks, setTasks] = useState([]);
@@ -30,7 +31,7 @@ function TaskList() {
             <ul>
                 {tasks.map(task => (
                     <li key={task.id} style={{ marginBottom: '1rem' }}>
-                        <h3>{task.title}</h3>
+                        <Link to={`/tasks/${task.id}`}>{task.title}</Link>
                         <p><strong>Description:</strong> {task.description || 'No description'}</p>
                         <p><strong>Status:</strong> {task.status}</p>
                         <p><strong>Due Date:</strong> {task.dueDate || 'None'}</p>
