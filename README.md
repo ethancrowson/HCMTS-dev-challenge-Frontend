@@ -36,11 +36,6 @@ The application will be available at http://localhost:3000.
 ## API Integration
 The frontend communicates with the backend API hosted at http://localhost:8080/api/tasks for all task-related operations (CRUD).
 
-## Unit Tests
-The frontend includes basic tests using Jest and React Testing Library. To run the tests:
-```
-npm test
-```
 ### API Documentation (for the frontend)
 This section describes the tasks and operations available to the frontend application.
 
