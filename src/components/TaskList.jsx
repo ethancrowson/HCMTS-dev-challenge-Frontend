@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getAllTasks } from '../services/TaskService';
 import { Link } from 'react-router-dom';
+import StatusColour from './StatusColour';
+import '../styles/CardStyles.css';
 
 function TaskList() {
     const [tasks, setTasks] = useState([]);
@@ -26,18 +28,28 @@ function TaskList() {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div>
-            <h2>Task List</h2>
-            <ul>
+        <div className="container">
+            <div className="header">
+                <h1>Task List</h1>
+                <Link to="/create">
+                    <button>Create Task</button>
+                </Link>
+            </div>
+            <div className="task-grid">
                 {tasks.map(task => (
-                    <li key={task.id} style={{ marginBottom: '1rem' }}>
-                        <Link to={`/tasks/${task.id}`}>{task.title}</Link>
-                        <p><strong>Description:</strong> {task.description || 'No description'}</p>
-                        <p><strong>Status:</strong> {task.status}</p>
-                        <p><strong>Due Date:</strong> {task.dueDate || 'None'}</p>
-                    </li>
+                    <div key={task.id} className="card">
+                        <h2>{task.title}</h2>
+                        <p>{task.description}</p>
+                        <p>Due: {task.dueDate}</p>
+                        <div className="status-space">
+                            <StatusColour status={task.status}/>
+                        </div>
+                        <Link to={`/task/${task.id}`}>
+                            <button>View Details</button>
+                        </Link>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 }

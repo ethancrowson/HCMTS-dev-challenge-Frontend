@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import StatusColour from "./StatusColour";
+import "../styles/CardStyles.css";
 
 const BASE_URL = 'http://localhost:8080/tasks';
 
@@ -80,35 +82,28 @@ function TaskDetails() {
     if (!task) return <p>Task not found.</p>;
 
     return (
-        <div>
+        <div className="card">
             <h2>{task.title}</h2>
-            <p><strong>Description:</strong> {task.description}</p>
-            <p><strong>Due Date:</strong> {task.dueDate}</p>
-
-            <p><strong>Status:</strong>
-                <select
-                    value={newStatus}
-                    onChange={(e) => setNewStatus(e.target.value)}
-                    style={{marginLeft: '10px'}}
-                >
-                    <option value="PENDING">PENDING</option>
-                    <option value="IN_PROGRESS">IN_PROGRESS</option>
-                    <option value="COMPLETED">COMPLETED</option>
-                    <option value="ON_HOLD">ON_HOLD</option>
-                    <option value="CANCELLED">CANCELLED</option>
-                </select>
-            </p>
-
-            <button onClick={handleDelete} style={{ marginRight: '10px' }}>Delete Task</button>
-            <button onClick={handleUpdateStatus}>Update Status</button>
-
-            {successMessage && (
-                <p style={{ color: "green", marginTop: "10px" }}>{successMessage}</p>
-            )}
-
-            <div style={{ marginTop: '20px' }}>
-                <Link to="/">← Back to Task List</Link>
+            <p>{task.description}</p>
+            <p>Due: {task.dueDate}</p>
+            <div className="status-space">
+                <StatusColour status={task.status}/>
             </div>
+            <div className="input-group">
+                <label>Update Status:</label>
+                <select value={newStatus} onChange={e => setNewStatus(e.target.value)}>
+                    <option value="">Select</option>
+                    <option value="PENDING">Pending</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="COMPLETED">Completed</option>
+                    <option value="ON_HOLD">On Hold</option>
+                    <option value="CANCELLED">Cancelled</option>
+                </select>
+            </div>
+            <button onClick={handleUpdateStatus}>Update Status</button>
+            <button onClick={handleDelete} style={{ backgroundColor: "#dc3545", color: "#fff" }}>Delete</button>
+            <Link to="/"><button>Back</button></Link>
+            {successMessage && <p className="success-message">{successMessage}</p>}
         </div>
     );
 }

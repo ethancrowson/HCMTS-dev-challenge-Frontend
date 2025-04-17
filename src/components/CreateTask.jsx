@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { createTask } from '../services/TaskService';
+import "../styles/CardStyles.css";
 
 export default function CreateTask() {
     const navigate = useNavigate();
@@ -11,7 +12,7 @@ export default function CreateTask() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const handleSubmit = async (e) => {
+    const handleCreate = async (e) => {
         e.preventDefault();
         setError(''); setSuccess('');
         if (!title.trim()) {
@@ -31,58 +32,21 @@ export default function CreateTask() {
     };
 
     return (
-        <div style={{ padding: '20px' }}>
-            <h2>Create New Task</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {success && <p style={{ color: 'green' }}>{success}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Title:<br/>
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={e => setTitle(e.target.value)}
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>Description:<br/>
-                        <textarea
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>Due Date:<br/>
-                        <input
-                            type="date"
-                            value={dueDate}
-                            onChange={e => setDueDate(e.target.value)}
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>Status:<br/>
-                        <select
-                            value={status}
-                            onChange={e => setStatus(e.target.value)}
-                        >
-                            <option value="PENDING">PENDING</option>
-                            <option value="IN_PROGRESS">IN_PROGRESS</option>
-                            <option value="COMPLETED">COMPLETED</option>
-                            <option value="ON_HOLD">ON_HOLD</option>
-                            <option value="CANCELLED">CANCELLED</option>
-                        </select>
-                    </label>
-                </div>
-                <button type="submit" style={{ marginTop: '10px' }}>
-                    Create Task
-                </button>
-            </form>
-            <div style={{ marginTop: '20px' }}>
-                <Link to="/">← Back to Task List</Link>
+        <div className="card">
+            <h2>Create Task</h2>
+            <div className="input-group">
+                <label>Title:</label>
+                <input value={title} onChange={e => setTitle(e.target.value)} />
             </div>
+            <div className="input-group">
+                <label>Description:</label>
+                <textarea value={description} onChange={e => setDescription(e.target.value)} />
+            </div>
+            <div className="input-group">
+                <label>Due Date:</label>
+                <input type="date" value={dueDate} onChange={e => setDueDate(e.target.value)} />
+            </div>
+            <button onClick={handleCreate}>Create</button>
         </div>
     );
 }
